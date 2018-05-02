@@ -20,13 +20,20 @@ all: ./bin/test-FiveLetterWordScramble_Mode.out
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(INCLUDE_DIRS) $(CPPFLAGS) $(CXXFLAGS) -c -o  $@ $<
 
-./bin/test-FiveLetterWordScramble_Mode.out: $(OBJ_FILES) ./tst/test-FiveLetterWordScramble_Mode.cpp ./include/*.hpp
+./bin/test-FiveLetterWordScramble_Mode.out: $(OBJ_FILES) ./tst/test-Game_Engine.cpp ./include/*.hpp
+	g++ $(CPPFLAGS) $(CXXFLAGS) $(INCLUDE_DIRS) \
+		-o ./bin/test-Game_Engine.out \
+		./tst/test-Game_Engine.cpp $(OBJ_FILES)
+	./bin/test-Game_Engine.out
+
+./bin/test-Game_Engine.out: $(OBJ_FILES) ./tst/test-Game_Engine.cpp ./include/*.hpp
 	g++ $(CPPFLAGS) $(CXXFLAGS) $(INCLUDE_DIRS) \
 		-o ./bin/test-FiveLetterWordScramble_Mode.out \
 		./tst/test-FiveLetterWordScramble_Mode.cpp $(OBJ_FILES)
 	./bin/test-FiveLetterWordScramble_Mode.out
 
 # Convenience rules for the command line to quickly test a class
+Game_Engine: ./bin/test-Game_Engine.out
 
 FiveLetterWordScramble_Mode: ./bin/test-FiveLetterWordScramble_Mode.out
 
