@@ -1,8 +1,8 @@
 #include "GameEngine.hpp"
 #include <iostream>
 
-GameEngine::GameEngine(GameMode game_, GameState gameState_) :
-    game(game_), gameState(gameState_) {
+GameEngine::GameEngine(GameMode game_) :
+    game(game_) {
     tick = game_.
   }
 
