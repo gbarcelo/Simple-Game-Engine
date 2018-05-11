@@ -1,14 +1,12 @@
 #include "GameMode.hpp"
-#include "GameState.hpp"
 
 class GameEngine{
 private:
   enum TickType tick;
-  GameMode game;
-  bool isEndGame;
+  GameMode *game;
 
 public:
-  GameEngine(GameMode game_);
+  GameEngine(GameMode *game_);
 
   // Anything needed before MainLoop starts goes here
   void setUp();
@@ -23,4 +21,4 @@ public:
 
   // Anything needed after a game ends goes here
   void sessionSummary();
-}
+};
