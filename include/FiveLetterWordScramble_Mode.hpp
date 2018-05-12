@@ -16,6 +16,8 @@ private:
   std::string randomWordSelector();
   // Gets all valid permutations of s in the dictionary
   void setValidAnswers(std::string s);
+  // Shuffle letters in the words
+  std::string wordScrambler(std::string s);
 
 public:
   FiveLetterWordScramble_Mode();

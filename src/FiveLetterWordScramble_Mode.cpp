@@ -3,6 +3,7 @@
 #include <sstream>
 #include <utility>
 #include <algorithm>
+#include <ctime>
 // temporary include DEBUG
 #include <iostream>
 /* This class inherits from GameMode */
@@ -47,7 +48,12 @@ void FiveLetterWordScramble_Mode::loadDictionaryFromFile(){
 }
 
 std::string FiveLetterWordScramble_Mode::randomWordSelector(){
-  puts("Not yet implemented");
+  std::srand(std::time(nullptr));
+  auto randIt = dictionary.begin();
+  std::advance(randIt, std::rand() % dictionary.size());
+  // Display chosen word DEBUG
+  std::cout << "randIt: " << *randIt << std::endl;
+  return *randIt;
 }
 
 void FiveLetterWordScramble_Mode::setValidAnswers(std::string s){
@@ -93,18 +99,23 @@ void FiveLetterWordScramble_Mode::setValidAnswers(std::string s){
       // add to vector of valid answers
       validAnswers.push_back(*it);
     }
-
   }
 
-
   // std::cout << "Number of permutations: " << perms.size() << std::endl;
-
-  // Print everything in the vector of permuations
+  // Print everything in the vector of permuations DEBUG
   for(auto it = validAnswers.begin(); it != validAnswers.end(); it++){
     std::cout << *it << std::endl;
   }
 
   return;
+}
+
+std::string FiveLetterWordScramble_Mode::wordScrambler(std::string s){
+  std::string temp = s;
+  random_shuffle(temp.begin(), temp.end());
+  // print shuffle before/after DEBUG
+  std::cout << "Before shuffle: " << s << " // After shuffle: " << temp << std::endl;
+  return temp;
 }
 
 /****************************
@@ -115,6 +126,9 @@ TickType FiveLetterWordScramble_Mode::getTickType() const {return tick;}
 
 void FiveLetterWordScramble_Mode::setUp() {
   loadDictionaryFromFile();
+  state->setCurrWord(randomWordSelector());
+  setValidAnswers(state->getCurrWord());
+  state->setCurrWord(wordScrambler(state->getCurrWord()));
 }
 
 void FiveLetterWordScramble_Mode::updatePerTick() {
