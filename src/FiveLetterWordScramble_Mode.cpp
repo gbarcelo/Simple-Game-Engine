@@ -130,7 +130,24 @@ void FiveLetterWordScramble_Mode::displayGamePrompt(){
  * Main Game Loop methods:
  ****************************/
 void validateUserGuess(std::string s){
+  std::cout << "Entered: " << s << std::endl;
+  std::vector<std::string> v = state->getValidGuesses;
+  // Check if s is in vector of valid guesses
+  if(std::find(v.begin(), v.end(), s) != v.end()){
+    // "You already guessed that", return
+    std::cout << "You have already received points for this answer!" << std::endl;
+    return;
+  } else if {
+    // Else if s is in vector of valid answers
+      // add to vector of valid guesses
+      
+      // increment user score
+  }
 
+
+  // Else
+    // Call incrementNumWrongAnswers
+    // "Not a valid word", return
 }
 
 
@@ -155,6 +172,9 @@ void FiveLetterWordScramble_Mode::setUp() {
 
 void FiveLetterWordScramble_Mode::updatePerTick() {
   std::string input;
+  getline(cin, input);
+  validateUserGuess(input);
+
 
   state->incrementTick();
 }
