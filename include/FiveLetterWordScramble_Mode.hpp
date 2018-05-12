@@ -18,6 +18,8 @@ private:
   void setValidAnswers(std::string s);
   // Shuffle letters in the words
   std::string wordScrambler(std::string s);
+  // Display game information to user
+  void displayGamePrompt();
 
 public:
   FiveLetterWordScramble_Mode();

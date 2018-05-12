@@ -19,6 +19,10 @@ FiveLetterWordScramble_Mode::FiveLetterWordScramble_Mode() {
   state = new FiveLetterWordScramble_State();
 }
 
+/****************************
+ * SetUp methods:
+ ****************************/
+
 // Build data member "dictionary" from a file "dictoinary.db"
 void FiveLetterWordScramble_Mode::loadDictionaryFromFile(){
   std::ifstream infile("data/dictionary.db");
@@ -118,6 +122,23 @@ std::string FiveLetterWordScramble_Mode::wordScrambler(std::string s){
   return temp;
 }
 
+void FiveLetterWordScramble_Mode::displayGamePrompt(){
+
+}
+
+/****************************
+ * Main Game Loop methods:
+ ****************************/
+void validateUserGuess(std::string s){
+
+}
+
+
+ /****************************
+  * Session Summary methods:
+  ****************************/
+
+
 /****************************
  * Interface Override Methods:
  ****************************/
@@ -129,15 +150,17 @@ void FiveLetterWordScramble_Mode::setUp() {
   state->setCurrWord(randomWordSelector());
   setValidAnswers(state->getCurrWord());
   state->setCurrWord(wordScrambler(state->getCurrWord()));
+  displayGamePrompt();
 }
 
 void FiveLetterWordScramble_Mode::updatePerTick() {
-  //
+  std::string input;
+
   state->incrementTick();
 }
 
 bool FiveLetterWordScramble_Mode::isEndGame() {
-  if (state->getCurrentTick() > 100000000) {
+  if (state->getCurrentTick() > 100) {
     return 1;
   }
   return 0;
