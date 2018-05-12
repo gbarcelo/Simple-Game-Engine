@@ -9,9 +9,14 @@ class FiveLetterWordScramble_Mode: public GameMode {
 private:
   FiveLetterWordScramble_State *state;
   std::vector<std::string> dictionary;
+  std::vector<std::string> validAnswers;
   // Builds dictionary of words for game mode
   void loadDictionaryFromFile();
-  
+  // Returns a random word from the dictionary (five letter?)
+  std::string randomWordSelector();
+  // Gets all valid permutations of s in the dictionary
+  void setValidAnswers(std::string s);
+
 public:
   FiveLetterWordScramble_Mode();
 
