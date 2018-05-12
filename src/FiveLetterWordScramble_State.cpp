@@ -12,6 +12,27 @@ void FiveLetterWordScramble_State::pushValidGuess(std::string s) {validGuesses.p
 int FiveLetterWordScramble_State::getNumWrong() const {return numWrongAnswers;}
 void FiveLetterWordScramble_State::incrementNumWrong() {numWrongAnswers++;}
 
+int FiveLetterWordScramble_State::getScore() const {return score;}
+void FiveLetterWordScramble_State::incrementScore(int n){
+  switch(n){
+    case 42:
+    score+=END_PT;
+    break;
+
+    case 5:
+    score+=PTS_5L;
+    break;
+
+    case 4:
+    score+=PTS_4L;
+    break;
+
+    case 3:
+    score+=PTS_3L;
+    break;
+  }
+}
+
 int FiveLetterWordScramble_State::getCurrentTick() {return currentTick;}
 void FiveLetterWordScramble_State::setCurrentTick(int n) {currentTick = n;}
 void FiveLetterWordScramble_State::incrementTick() {currentTick++;}

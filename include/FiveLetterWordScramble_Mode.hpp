@@ -20,6 +20,8 @@ private:
   std::string wordScrambler(std::string s);
   // Display game information to user
   void displayGamePrompt();
+  // Validate user guess
+  void validateUserGuess(std::string s);
 
 public:
   FiveLetterWordScramble_Mode();
