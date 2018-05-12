@@ -7,7 +7,7 @@
 
 class GameState{
 protected:
-  int currentTick;
+  int currentTick = 0;
   // vector of <players>?
 public:
   // Abstraction to force implementation of mode-specific state

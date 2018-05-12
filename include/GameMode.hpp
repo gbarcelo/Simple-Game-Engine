@@ -12,8 +12,8 @@ enum class TickType { Real_Time, Custom_Tick, Rounds, Turns };
 
 class GameMode{
 protected:
-  enum TickType tick;
-  GameState *state;
+  TickType tick;
+  //GameState *state; // Need to create mode-unique state class
 
 public:
   virtual TickType getTickType() const = 0;

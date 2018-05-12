@@ -25,6 +25,7 @@ void GameEngine::mainLoop_Rounds(){
     // Interface method that updates game state
     game->updatePerTick();
   }
+  sessionSummary();
 }
 
 void GameEngine::sessionSummary(){

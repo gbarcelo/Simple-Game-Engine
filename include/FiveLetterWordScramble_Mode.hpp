@@ -1,10 +1,17 @@
 #include "GameMode.hpp"
 #include "FiveLetterWordScramble_State.hpp"
+#include <vector>
+#include <string>
+
 /* This class inherits from GameMode */
 
 class FiveLetterWordScramble_Mode: public GameMode {
 private:
-  //
+  FiveLetterWordScramble_State *state;
+  std::vector<std::string> dictionary;
+  // Builds dictionary of words for game mode
+  void loadDictionaryFromFile();
+  
 public:
   FiveLetterWordScramble_Mode();
 
@@ -18,5 +25,6 @@ public:
   bool isEndGame() override;
 
   void endSession() override;
+
 
 };
