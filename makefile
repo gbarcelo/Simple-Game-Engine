@@ -15,7 +15,7 @@ SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 #all: ./bin/test-FiveLetterWordScramble_Mode.out
-all:
+all: run
 
 # This build each of the .cpp in the src dir into a .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
