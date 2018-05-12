@@ -123,9 +123,21 @@ std::string FiveLetterWordScramble_Mode::wordScrambler(std::string s){
 }
 
 void FiveLetterWordScramble_Mode::displayGamePrompt(){
-
+  int c;
+    // while(1){
+      std::cout << "Come up with as many words as possible with the five given letters" << std::endl;
+      std::cout << "Press any key to start the game" << std::endl;
+      std::cout << "Press q to quit the game" << std::endl;
+      c = getchar();
+      while(getchar() != '\n') {}
+      if (c == 'q') {
+        std::cout << "Returning to menu" << std::endl;
+        return;
+      }else {
+        std::cout << "LET'S GET SCRAMBLING!!!!" << std::endl;
+      }
+    // }
 }
-
 /****************************
  * Main Game Loop methods:
  ****************************/
