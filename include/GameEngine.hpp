@@ -1,18 +1,12 @@
 #include "GameMode.hpp"
-#include "GameState.hpp"
-
-// Time-tracking mechanic
-enum class TickType { Real_Time, Custom_Tick, Rounds, Turns };
 
 class GameEngine{
 private:
   enum TickType tick;
-  GameMode game;
-  GameState gameState;
-  bool isEndGame;
+  GameMode *game;
 
 public:
-  GameEngine(GameMode game_, GameState gameState_);
+  GameEngine(GameMode *game_);
 
   // Anything needed before MainLoop starts goes here
   void setUp();
@@ -27,4 +21,4 @@ public:
 
   // Anything needed after a game ends goes here
   void sessionSummary();
-}
+};
