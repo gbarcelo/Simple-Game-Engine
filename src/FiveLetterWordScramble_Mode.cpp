@@ -54,9 +54,12 @@ void FiveLetterWordScramble_Mode::loadDictionaryFromFile(){
 std::string FiveLetterWordScramble_Mode::randomWordSelector(){
   std::srand(std::time(nullptr));
   auto randIt = dictionary.begin();
-  std::advance(randIt, std::rand() % dictionary.size());
-  // Display chosen word DEBUG
-  // std::cout << "randIt: " << *randIt << std::endl;
+  while (randIt == dictionary.begin() || (*randIt).size() < 5){
+    // Display chosen word/size DEBUG
+    // std::cout << "randIt size: " << (*randIt).size() << std::endl;
+    if ((*randIt).size() == 0){ randIt = dictionary.begin();}
+    std::advance(randIt, std::rand() % dictionary.size());
+  }
   return *randIt;
 }
 
@@ -112,11 +115,11 @@ void FiveLetterWordScramble_Mode::setValidAnswers(std::string s){
 
   // std::cout << "Number of permutations: " << perms.size() << std::endl;
   // Print everything in the vector of permuations DEBUG
-  std::cout << "All valid answers:" << std::endl;
-  for(auto it = validAnswers.begin(); it != validAnswers.end(); it++){
-    std::cout << *it << std::endl;
-  }
-  std::cout << "End setValidAnswer" << std::endl; // DEBUG
+  // std::cout << "All valid answers:" << std::endl;
+  // for(auto it = validAnswers.begin(); it != validAnswers.end(); it++){
+  //   std::cout << *it << std::endl;
+  // }
+  // std::cout << "End setValidAnswer" << std::endl; // DEBUG
   return;
 }
 
@@ -173,7 +176,7 @@ void FiveLetterWordScramble_Mode::validateUserGuess(std::string s){
       // add to vector of valid guesses
       state->pushValidGuess(entry);
       // increment user score
-      state->incrementScore(entry.size()-1);
+      state->incrementScore(entry.size());
       std::cout << "Score!" << std::endl;
   } else {
     // Else
