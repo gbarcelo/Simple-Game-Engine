@@ -1,4 +1,5 @@
 # Simple Game Engine with Interface
+A simple game engine that implements new games using a GameMode abstract class and an optional GameState abstract class. Currently runs in terminal only (no graphics), but SFML is being considered. Good practice for beginner C++ programming.
 
 ## Current Games:
  - Five-Letter Word Scramble
