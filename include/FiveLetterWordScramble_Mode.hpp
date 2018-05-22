@@ -27,7 +27,6 @@ public:
   FiveLetterWordScramble_Mode();
 
   TickType getTickType() const override;
-  // void setTickType(TickType t) override {tick = t;}
 
   void setUp() override;
 
