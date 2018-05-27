@@ -3,10 +3,11 @@
 #include <string>
 /* This class inherits from GameState */
 
-#define END_PT 20
-#define PTS_5L 6
-#define PTS_4L 4
-#define PTS_3L 2
+#define END_PT    20
+#define END_MULT  5
+#define PTS_5L    6
+#define PTS_4L    4
+#define PTS_3L    2
 
 class FiveLetterWordScramble_State: public GameState {
 private:

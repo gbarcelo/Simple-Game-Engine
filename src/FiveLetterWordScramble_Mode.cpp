@@ -46,8 +46,8 @@ void FiveLetterWordScramble_Mode::loadDictionaryFromFile(){
   }
 
   // DEBUG
-  std::cout << "Dictionary Built: ";
-  std::cout << "Size = " << dictionary.size() << std::endl;
+  // std::cout << "Dictionary Built: ";
+  // std::cout << "Size = " << dictionary.size() << std::endl;
 
 }
 
@@ -56,9 +56,13 @@ std::string FiveLetterWordScramble_Mode::randomWordSelector(){
   auto randIt = dictionary.begin();
   while (randIt == dictionary.begin() || (*randIt).size() < 5){
     // Display chosen word/size DEBUG
-    // std::cout << "randIt size: " << (*randIt).size() << std::endl;
-    if ((*randIt).size() == 0){ randIt = dictionary.begin();}
-    std::advance(randIt, std::rand() % dictionary.size());
+    // std::cout << "randIt size: " << (*randIt).size() << " word: " << *randIt << std::endl;
+    int randPos = dictionary.size() + 1;
+    while (randPos > std::distance(randIt,dictionary.end())){
+      randIt = dictionary.begin();
+      randPos = std::rand() % dictionary.size();
+    }
+    std::advance(randIt, randPos);
   }
   return *randIt;
 }
@@ -124,11 +128,10 @@ void FiveLetterWordScramble_Mode::setValidAnswers(std::string s){
 }
 
 std::string FiveLetterWordScramble_Mode::wordScrambler(std::string s){
-  std::cout << "  Before shuffle: " << s << std::endl;
   std::string temp = s;
   random_shuffle(temp.begin(), temp.end()-1);
   // print shuffle before/after DEBUG
-  std::cout << "  After shuffle: " << temp << std::endl;
+  // std::cout << "\tBefore shuffle: " << s <<"\tAfter shuffle: " << temp << std::endl;
   return temp;
 }
 
@@ -163,9 +166,17 @@ void FiveLetterWordScramble_Mode::displayGamePrompt(){
  ****************************/
 void FiveLetterWordScramble_Mode::validateUserGuess(std::string s){
   std::string entry = s;
-  entry[entry.size()] = '\0';
-  std::cout << "Entered: " << entry << std::endl; // DEBUG
+  if (entry[0]=='/'){
+    processCommand(entry.substr(1, entry.size()));
+    return;
+  }
+  // entry[entry.size()] = '\0'; // DEBUG
+  // std::cout << "Entered: " << entry << std::endl; // DEBUG
   std::vector<std::string> v = state->getValidGuesses();
+  if (entry.size() < 3 || entry.size() > 5){
+    std::cout << "Your guess is the wrong size, try again!" << std::endl;
+    return;
+  }
   // Check if s is in vector of valid guesses
   if(std::find(v.begin(), v.end(), entry) != v.end()){
     // "You already guessed that", return
@@ -186,13 +197,36 @@ void FiveLetterWordScramble_Mode::validateUserGuess(std::string s){
       if (state->getNumWrong()<5){
         std::cout << "Not a valid word - you have " << 5-state->getNumWrong();
         std::cout << " tries remaining!" << std::endl;
-        std::cout << "" << std::endl;
       }
 
   }
 
 }
 
+void FiveLetterWordScramble_Mode::processCommand(std::string c){
+  if (c=="help"){
+    std::cout << "\n= = = = = Commands = = = = =" << std::endl;
+    std::cout << "= /quit:\tQuit game" << std::endl;
+    // std::cout << "= " << std::endl;
+    // std::cout << "= " << std::endl;
+    std::cout << "= = = = = = ~  ~ = = = = = =" << std::endl;
+  }
+  else if (c=="quit"){ isQuit = true; }
+  else {
+    std::cout << "Command not found. Enter /help for a list of commands.";
+    std::cout << std::endl;
+  }
+  // switch(c){
+  //   case '/quit':
+  //   isQuit = true;
+  //   break;
+  //
+  //   default:
+  //   std::cout << "Command not found. Enter /help for a list of commands.";
+  //   std::cout << std::endl;
+  // }
+  return;
+}
 
  /****************************
   * Session Summary methods:
@@ -216,10 +250,22 @@ void FiveLetterWordScramble_Mode::setUp() {
 
 void FiveLetterWordScramble_Mode::updatePerTick() {
   std::string input;
-  std::cout << "Letters: " << std::endl;
+  const std::vector<std::string> vGuesses = state->getValidGuesses();
+
+  std::cout << "\nLetters: \t\tWords Left: " << validAnswers.size() - vGuesses.size() <<std::endl;
   std::cout << "" << std::endl;
-  std::cout << "    " << state->getCurrWord() << std::endl;
+  std::cout << "\t" << state->getCurrWord() << std::endl;
   std::cout << "" << std::endl;
+  // std::cout << "Words Left: " << validAnswers.size() - vGuesses.size() << std::endl;
+  // std::cout << "" << std::endl;
+  std::cout << "Correct guesses:\n";
+  int i = 1;
+  for (auto it = vGuesses.begin(); it != vGuesses.end(); ++it){
+    std::cout << "\t" << *it;
+    if (i%4 == 0){std::cout << std::endl;}
+    i++;
+  }
+  std::cout << "\n" << std::endl;
   std::cout << "My guess: ";
   getline(std::cin, input);
   input[input.size()] = '\0';
@@ -232,12 +278,31 @@ bool FiveLetterWordScramble_Mode::isEndGame() {
   if (state->getNumWrong() > 4){
     std::cout << "" << std::endl;
     std::cout << "You got 5 wrong! Game Over!" << std::endl;
+    std::cout << "" << std::endl;
+    std::cout << "Correct answers:\n";
+    int i = 1;
+    for (auto it = validAnswers.begin(); it != validAnswers.end(); ++it){
+      std::cout << "\t" << *it;
+      if (i%4 == 0){std::cout << std::endl;}
+      i++;
+    }
+    std::cout << "" << std::endl;
     return 1;
   }
   if (state->getValidGuesses().size() >= validAnswers.size()) {
-    state->incrementScore(42);
-    std::cout << "" << std::endl;
-    std::cout << "You found all the words! (20 bonus points)" << std::endl;
+    if (validAnswers.size() <= 4){
+      state->incrementScore(100);
+      std::cout << "" << std::endl;
+      std::cout << "You found all the words! (20 bonus points)" << std::endl;
+    } else {
+      state->incrementScore(100 + validAnswers.size());
+      std::cout << "" << std::endl;
+      std::cout << "You found all the words! Extra bonus for 5+ words! (5 points per word)" << std::endl;
+    }
+
+    return 1;
+  }
+  if (isQuit){
     return 1;
   }
   return 0;

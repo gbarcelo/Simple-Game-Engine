@@ -10,6 +10,7 @@ private:
   FiveLetterWordScramble_State *state;
   std::vector<std::string> dictionary;
   std::vector<std::string> validAnswers;
+  bool isQuit = false;
   // Builds dictionary of words for game mode
   void loadDictionaryFromFile();
   // Returns a random word from the dictionary (five letter?)
@@ -22,6 +23,8 @@ private:
   void displayGamePrompt();
   // Validate user guess
   void validateUserGuess(std::string s);
+  // Implement user commands
+  void processCommand(std::string c);
 
 public:
   FiveLetterWordScramble_Mode();

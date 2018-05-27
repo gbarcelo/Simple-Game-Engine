@@ -14,8 +14,12 @@ void FiveLetterWordScramble_State::incrementNumWrong() {numWrongAnswers++;}
 
 int FiveLetterWordScramble_State::getScore() const {return score;}
 void FiveLetterWordScramble_State::incrementScore(int n){
+  if (n>100){
+    score+= (n-100)*END_MULT;
+    return;
+  }
   switch(n){
-    case 42:
+    case 100:
     score+=END_PT;
     break;
 
